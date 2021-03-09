@@ -20,8 +20,8 @@ int main (int argc, char **argv)
  complexe_float_t* cf1 = malloc (sizeof(complexe_float_t*)*6);
  complexe_float_t* cf2 = malloc (sizeof(complexe_float_t*)*6);
 
- complexe_double_t* cd1 = malloc (sizeof(complexe_double_t*)*6);
- complexe_double_t* cd2 = malloc (sizeof(complexe_double_t*)*6);
+ complexe_double_t* cd1 = malloc (sizeof(double*)*12);
+ complexe_double_t* cd2 = malloc (sizeof(double*)*12);
 
 //  unsigned long long int start, end ;
 
@@ -41,11 +41,11 @@ int main (int argc, char **argv)
 
  printf("\n\n\nFLOAT\n\nAvant copie :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
-     printf("%f, ", *f1+i);
+     printf("%f, ", f1[i]);
  }
  printf("\nVecteur Y : ");
  for (int i = 0; i < 6; i++) {
-     printf("%f, ", *f2+i);
+     printf("%f, ", f2[i]);
  }
  printf("\n");
  
@@ -53,11 +53,11 @@ int main (int argc, char **argv)
 
  printf("Après copie :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
-     printf("%f, ", *f1+i);
+     printf("%f, ", f1[i]);
  }
  printf("\nVecteur Y : ");
  for (int i = 0; i < 6; i++) {
-     printf("%f, ", *f2+i);
+     printf("%f, ", f2[i]);
  }
  printf("\n");
 
@@ -79,11 +79,11 @@ int main (int argc, char **argv)
 
  printf("\n\n\nDOUBLE\n\nAvant copie :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
-     printf("%lf, ", *d1+i);
+     printf("%lf, ", d1[i]);
  }
  printf("\nVecteur Y : ");
  for (int i = 0; i < 6; i++) {
-     printf("%lf, ", *d2+i);
+     printf("%lf, ", d2[i]);
  }
  printf("\n");
  
@@ -91,11 +91,11 @@ int main (int argc, char **argv)
 
  printf("Après copie :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
-     printf("%lf, ", *d1+i);
+     printf("%lf, ", d1[i]);
  }
  printf("\nVecteur Y : ");
  for (int i = 0; i < 6; i++) {
-     printf("%lf, ", *d2+i);
+     printf("%lf, ", d2[i]);
  }
  printf("\n");
 

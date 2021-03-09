@@ -12,75 +12,84 @@ int main (int argc, char **argv)
 {
 
  float* f1= malloc (sizeof(float*)*6);
+ f1[0] = 3.0;
+ f1[1] = 2.0;
+ f1[2] = 4.0;
+ f1[3] = -1.0;
+ f1[4] = -5.0;
+ f1[5] = 2.0;
+ float f2;
 
- double* d1= malloc (sizeof(double*)*6) ;
+ printf("\n");
+
+ double* d1= malloc (sizeof(double*)*6);
+ d1[0] = 3.0;
+ d1[1] = 2.0;
+ d1[2] = 4.0;
+ d1[3] = -1.0;
+ d1[4] = -5.0;
+ d1[5] = 2.0;
+ float d2;
+
+ printf("\n");
 
  complexe_float_t* cf1 = malloc (sizeof(complexe_float_t*)*6);
+ cf1[0].real = 3.0;  cf1[0].imaginary = -2.0;
+ cf1[1].real = 2.0; cf1[1].imaginary = -6.0;
+ cf1[2].real = 4.0; cf1[2].imaginary = 1.0;
+ cf1[3].real = -1.0; cf1[3].imaginary = 3.0;
+ cf1[4].real = -5.0; cf1[4].imaginary = 0.0;
+ cf1[5].real = 2.0; cf1[5].imaginary = -2.0;
+ float cf2;
+
+ printf("\n");
 
  complexe_double_t* cd1 = malloc (sizeof(complexe_double_t*)*6);
+ cd1[0].real = 3.0;  cd1[0].imaginary = -2.0;
+ cd1[1].real = 2.0; cd1[1].imaginary = -6.0;
+ cd1[2].real = 4.0; cd1[2].imaginary = 1.0;
+ cd1[3].real = -1.0; cd1[3].imaginary = 3.0;
+ cd1[4].real = -5.0; cd1[4].imaginary = 0.0;
+ cd1[5].real = 2.0; cd1[5].imaginary = -2.0;
+ float cd2;
+
+ printf("\n");
 
 //  unsigned long long int start, end ;
 
  init_flop () ;
 
- float enter = 1.0;
-
+ printf("FLOAT\n\nAvant asum :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
-     f1[i] = enter;
-     enter++;
- }
-
- printf("\n\n\nFLOAT\n\nAvant asum :\nVecteur X : ");
- for (int i = 0; i < 6; i++) {
-     printf("%f, ", *f1+i);
+     printf("%f, ", f1[i]);
  }
  printf("\n");
  
- mnblas_sasum (6, f1, 1) ;
+ f2 = mnblas_sasum (6, f1, 1) ;
 
- printf("Après asum :\nVecteur X : ");
- for (int i = 0; i < 6; i++) {
-     printf("%f, ", *f1+i);
- }
- printf("\n");
+ printf("Après asum :\nSomme : ");
+ printf("%f\n", f2);
 
 
 
 
 
- double enterd = 1.0;
-
- for (int i = 0; i < 6; i++) {
-     d1[i] = enterd;
-     enterd++;
- }
 
  printf("\n\n\nDOUBLE\n\nAvant asum :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
-     printf("%lf, ", *d1+i);
+     printf("%lf, ", d1[i]);
  }
  printf("\n");
  
- mnblas_dasum (6, d1, 1) ;
+ d2 = mnblas_dasum (6, d1, 1) ;
 
- printf("Après asum :\nVecteur X : ");
- for (int i = 0; i < 6; i++) {
-     printf("%lf, ", *d1+i);
- }
- printf("\n");
+ printf("Après asum :\nSomme : ");
+ printf("%f\n", d2);
 
 
 
 
 
- complexe_float_t entercf = {1.0, 1.0};
-
- for (int i = 0; i < 6; i++) {
-     cf1[i].real = entercf.real;
-     cf1[i].imaginary = entercf.imaginary;
-     entercf.real++;
-     entercf.imaginary++;
- }
 
  printf("\n\n\nCOMPLEXE_FLOAT\n\nAvant asum :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
@@ -88,26 +97,15 @@ int main (int argc, char **argv)
  }
  printf("\n");
  
- mnblas_scasum (6, cf1, 1) ;
+ cf2 = mnblas_scasum (6, cf1, 1) ;
 
- printf("\nAprès asum :\nVecteur X : ");
- for (int i = 0; i < 6; i++) {
-     printf("%lf, %lf; ", cf1[i].real, cf1[i].imaginary);
- }
- printf("\n");
+ printf("\nAprès asum :\nSomme : ");
+ printf("%f\n", cf2);
 
 
 
 
 
- complexe_double_t entercd = {1.0, 1.0};
-
- for (int i = 0; i < 6; i++) {
-     cd1[i].real = entercd.real;
-     cd1[i].imaginary = entercd.imaginary;
-     entercd.real++;
-     entercd.imaginary++;
- }
 
  printf("\n\n\nCOMPLEXE_DOUBLE\n\nAvant asum :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
@@ -115,13 +113,10 @@ int main (int argc, char **argv)
  }
  printf("\n");
  
- mnblas_dzasum (6, cd1, 1) ;
+ cd2 = mnblas_dzasum (6, cd1, 1) ;
 
- printf("Après asum :\nVecteur X : ");
- for (int i = 0; i < 6; i++) {
-     printf("%lf, %lf; ", cd1[i].real, cd1[i].imaginary);
- }
- printf("\n");
+ printf("Après asum :\nSomme : ");
+ printf("%f\n", cd2);
 
 //  printf ("Addition de c1 et c2 : c3.r %f c3.i %f\n", c3.real, c3.imaginary) ;
 

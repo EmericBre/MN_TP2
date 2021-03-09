@@ -44,7 +44,7 @@ float mnblas_scnrm2(const int N, const void *X, const int incX)
   {
     nrm1 += pow(((complexe_float_t *)X)[i].real, 2) + pow(((complexe_float_t *)X)[i].imaginary, 2);
   }
-  nrm2 = (nrm1);
+  nrm2 = sqrt(nrm1);
 
   return nrm2;
 }

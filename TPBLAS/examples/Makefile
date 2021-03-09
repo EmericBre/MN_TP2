@@ -1,4 +1,4 @@
-all: test_complexe2 test_complexe test_swap test_copy test_axpy test_asum test_iamin test_iamax test_dot test_dot_dyn
+all: test_complexe2 test_complexe test_swap test_copy test_axpy test_asum test_iamin test_iamax test_nrm2 test_dot test_dot_dyn
 
 INC_DIR=../include
 
@@ -76,7 +76,7 @@ test_nrm2.o: test_nrm2.c  $(INC_DIR)/mnblas.h $(INC_DIR)/complexe.h
 	gcc $(OPTIONS_COMPIL) -c test_nrm2.c
 
 test_nrm2: test_nrm2.o flop.o
-	gcc -o test_nrm2 test_nrm2.o flop.o $(OPTIONS_LINK_STATIC)
+	gcc -o test_nrm2 test_nrm2.o flop.o $(OPTIONS_LINK_STATIC) -lm
 
 
 clean:

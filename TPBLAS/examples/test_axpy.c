@@ -20,8 +20,11 @@ int main (int argc, char **argv)
  complexe_float_t* cf1 = malloc (sizeof(complexe_float_t*)*6);
  complexe_float_t* cf2 = malloc (sizeof(complexe_float_t*)*6);
 
- complexe_double_t* cd1 = malloc (sizeof(complexe_double_t*)*6);
- complexe_double_t* cd2 = malloc (sizeof(complexe_double_t*)*6);
+ complexe_double_t* cd1 = malloc (sizeof(double*)*12);
+ complexe_double_t* cd2 = malloc (sizeof(double*)*12);
+
+ complexe_float_t* alphaf = malloc (sizeof(complexe_float_t*));
+ complexe_double_t* alphad = malloc (sizeof(double*)*2);
 
 //  unsigned long long int start, end ;
 
@@ -41,11 +44,11 @@ int main (int argc, char **argv)
 
  printf("\n\n\nFLOAT\n\nAvant axpy :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
-     printf("%f, ", *f1+i);
+     printf("%f, ", f1[i]);
  }
  printf("\nVecteur Y : ");
  for (int i = 0; i < 6; i++) {
-     printf("%f, ", *f2+i);
+     printf("%f, ", f2[i]);
  }
  printf("\n");
  
@@ -53,11 +56,11 @@ int main (int argc, char **argv)
 
  printf("Après axpy :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
-     printf("%f, ", *f1+i);
+     printf("%f, ", f1[i]);
  }
  printf("\nVecteur Y : ");
  for (int i = 0; i < 6; i++) {
-     printf("%f, ", *f2+i);
+     printf("%f, ", f2[i]);
  }
  printf("\n");
 
@@ -79,11 +82,11 @@ int main (int argc, char **argv)
 
  printf("\n\n\nDOUBLE\n\nAvant axpy :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
-     printf("%lf, ", *d1+i);
+     printf("%lf, ", d1[i]);
  }
  printf("\nVecteur Y : ");
  for (int i = 0; i < 6; i++) {
-     printf("%lf, ", *d2+i);
+     printf("%lf, ", d2[i]);
  }
  printf("\n");
  
@@ -91,11 +94,11 @@ int main (int argc, char **argv)
 
  printf("Après axpy :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
-     printf("%lf, ", *d1+i);
+     printf("%lf, ", d1[i]);
  }
  printf("\nVecteur Y : ");
  for (int i = 0; i < 6; i++) {
-     printf("%lf, ", *d2+i);
+     printf("%lf, ", d2[i]);
  }
  printf("\n");
 
@@ -103,85 +106,89 @@ int main (int argc, char **argv)
 
 
 
-//  complexe_float_t entercf = {1.0, 1.0};
+ complexe_float_t entercf = {1.0, 1.0};
+ alphaf[0].real = 2.0; alphaf[0].imaginary = 3.0;
 
-//  for (int i = 0; i < 6; i++) {
-//      cf1[i].real = entercf.real;
-//      cf1[i].imaginary = entercf.imaginary;
-//      entercf.real++;
-//      entercf.imaginary++;
-//  }
+ for (int i = 0; i < 6; i++) {
+     cf1[i].real = entercf.real;
+     cf1[i].imaginary = entercf.imaginary;
+     entercf.real++;
+     entercf.imaginary++;
+ }
 
-//  for (int i = 0; i < 6; i++) {
-//      cf2[i].real = entercf.real;
-//      cf2[i].imaginary = entercf.imaginary;
-//      entercf.real++;
-//      entercf.imaginary++;
-//  }
+ for (int i = 0; i < 6; i++) {
+     cf2[i].real = entercf.real;
+     cf2[i].imaginary = entercf.imaginary;
+     entercf.real++;
+     entercf.imaginary++;
+ }
 
-//  printf("\n\n\nCOMPLEXE_FLOAT\n\nAvant awpy :\nVecteur X : ");
-//  for (int i = 0; i < 6; i++) {
-//      printf("%lf, %lf; ", cf1[i].real, cf1[i].imaginary);
-//  }
-//  printf("\nVecteur Y : ");
-//  for (int i = 0; i < 6; i++) {
-//      printf("%lf, %lf; ", cf2[i].real, cf2[i].imaginary);
-//  }
-//  printf("\n");
+ printf("\n\n\nCOMPLEXE_FLOAT\n\nAvant axpy :\nVecteur X : ");
+ for (int i = 0; i < 6; i++) {
+     printf("%lf, %lf; ", cf1[i].real, cf1[i].imaginary);
+ }
+ printf("\nVecteur Y : ");
+ for (int i = 0; i < 6; i++) {
+     printf("%lf, %lf; ", cf2[i].real, cf2[i].imaginary);
+ }
+ printf("\n");
  
-//  mnblas_caxpy (6, 2.0, cf1, 1, cf2, 1) ;
+ mnblas_caxpy (6, alphaf, cf1, 1, cf2, 1) ;
 
-//  printf("\nAprès axpy :\nVecteur X : ");
-//  for (int i = 0; i < 6; i++) {
-//      printf("%lf, %lf; ", cf1[i].real, cf1[i].imaginary);
-//  }
-//  printf("\nVecteur Y : ");
-//  for (int i = 0; i < 6; i++) {
-//      printf("%lf, %lf; ", cf2[i].real, cf2[i].imaginary);
-//  }
-//  printf("\n");
-
-
+ printf("\nAprès axpy :\nVecteur X : ");
+ for (int i = 0; i < 6; i++) {
+     printf("%lf, %lf; ", cf1[i].real, cf1[i].imaginary);
+ }
+ printf("\nVecteur Y : ");
+ for (int i = 0; i < 6; i++) {
+     printf("%lf, %lf; ", cf2[i].real, cf2[i].imaginary);
+ }
+ printf("\n");
 
 
 
-//  complexe_double_t entercd = {1.0, 1.0};
 
-//  for (int i = 0; i < 6; i++) {
-//      cd1[i].real = entercd.real;
-//      cd1[i].imaginary = entercd.imaginary;
-//      entercd.real++;
-//      entercd.imaginary++;
-//  }
 
-//  for (int i = 0; i < 6; i++) {
-//      cd2[i].real = entercd.real;
-//      cd2[i].imaginary = entercd.imaginary;
-//      entercd.real++;
-//      entercd.imaginary++;
-//  }
+ complexe_double_t entercd = {1.0, 1.0};
+ alphad[0].real = 2.0; alphad[0].imaginary = 3.0;
 
-//  printf("\n\n\nCOMPLEXE_DOUBLE\n\nAvant axpy :\nVecteur X : ");
-//  for (int i = 0; i < 6; i++) {
-//      printf("%lf, %lf; ", cd1[i].real, cd1[i].imaginary);
-//  }
-//  printf("\nVecteur Y : ");
-//  for (int i = 0; i < 6; i++) {
-//      printf("%lf, %lf; ", cd2[i].real, cd2[i].imaginary);
-//  }
-//  printf("\n");
+ for (int i = 0; i < 6; i++) {
+     cd1[i].real = entercd.real;
+     cd1[i].imaginary = entercd.imaginary;
+     entercd.real++;
+     entercd.imaginary++;
+ }
+
+ for (int i = 0; i < 6; i++) {
+     cd2[i].real = entercd.real;
+     cd2[i].imaginary = entercd.imaginary;
+     entercd.real++;
+     entercd.imaginary++;
+ }
+
+ printf("\n\n\nCOMPLEXE_DOUBLE\n\nAvant axpy :\nVecteur X : ");
+ for (int i = 0; i < 6; i++) {
+     printf("%lf, %lf; ", cd1[i].real, cd1[i].imaginary);
+ }
+ printf("\nVecteur Y : ");
+ for (int i = 0; i < 6; i++) {
+     printf("%lf, %lf; ", cd2[i].real, cd2[i].imaginary);
+ }
+ printf("\n");
  
-//  mnblas_zaxpy (6, 2.0, cd1, 1, cd2, 1) ;
+ mnblas_zaxpy (6, alphad, cd1, 1, cd2, 1) ;
 
-//  printf("Après axpy :\nVecteur X : ");
-//  for (int i = 0; i < 6; i++) {
-//      printf("%lf, %lf; ", cd1[i].real, cd1[i].imaginary);
-//  }
-//  printf("\nVecteur Y : ");
-//  for (int i = 0; i < 6; i++) {
-//      printf("%lf, %lf; ", cd2[i].real, cd2[i].imaginary);
-//  }
-//  printf("\n");
+ printf("Après axpy :\nVecteur X : ");
+ for (int i = 0; i < 6; i++) {
+     printf("%lf, %lf; ", cd1[i].real, cd1[i].imaginary);
+ }
+ printf("\nVecteur Y : ");
+ for (int i = 0; i < 6; i++) {
+     printf("%lf, %lf; ", cd2[i].real, cd2[i].imaginary);
+ }
+ printf("\n");
+
+
 
 //  printf ("Addition de c1 et c2 : c3.r %f c3.i %f\n", c3.real, c3.imaginary) ;
 

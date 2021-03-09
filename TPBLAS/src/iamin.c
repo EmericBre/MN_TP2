@@ -57,7 +57,7 @@ CBLAS_INDEX mnblas_icamin(const int N, const void *X, const int incX)
     {
         if ((fabs(((complexe_float_t *)X)[j].real) + fabs(((complexe_float_t *)X)[j].imaginary)) < i)
         {
-            i = fabs(((complexe_float_t *)X)[j].real) + fabs(((complexe_float_t *)X)[j].real);
+            i = fabs(((complexe_float_t *)X)[j].real) + fabs(((complexe_float_t *)X)[j].imaginary);
         }
     }
 
