@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include "mnblas.h"
 #include "complexe.h"
+#include "math.h"
 
 float mnblas_snrm2(const int N, const float *X, const int incX)
 {

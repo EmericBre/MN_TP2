@@ -14,7 +14,7 @@ int main (int argc, char **argv)
  float* f1= malloc (sizeof(float*)*6);
  float* f2= malloc (sizeof(float*)*6);
 
- double* d1= malloc (sizeof(double*)*6);
+ double* d1= malloc (sizeof(double*)*6) ;
  double* d2= malloc (sizeof(double*)*6);
 
  complexe_float_t* cf1 = malloc (sizeof(complexe_float_t*)*6);
@@ -39,7 +39,7 @@ int main (int argc, char **argv)
      enter++;
  }
 
- printf("\n\n\nFLOAT\n\nAvant inversion :\nVecteur X : ");
+ printf("\n\n\nFLOAT\n\nAvant copie :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
      printf("%f, ", *f1+i);
  }
@@ -49,9 +49,9 @@ int main (int argc, char **argv)
  }
  printf("\n");
  
- mncblas_sswap (6, f1, 1, f2, 1) ;
+ mncblas_scopy (6, f1, 1, f2, 1) ;
 
- printf("Après inversion :\nVecteur X : ");
+ printf("Après copie :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
      printf("%f, ", *f1+i);
  }
@@ -77,7 +77,7 @@ int main (int argc, char **argv)
      enterd++;
  }
 
- printf("\n\n\nDOUBLE\n\nAvant inversion :\nVecteur X : ");
+ printf("\n\n\nDOUBLE\n\nAvant copie :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
      printf("%lf, ", *d1+i);
  }
@@ -87,9 +87,9 @@ int main (int argc, char **argv)
  }
  printf("\n");
  
- mncblas_dswap (6, d1, 1, d2, 1) ;
+ mncblas_dcopy (6, d1, 1, d2, 1) ;
 
- printf("Après inversion :\nVecteur X : ");
+ printf("Après copie :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
      printf("%lf, ", *d1+i);
  }
@@ -119,7 +119,7 @@ int main (int argc, char **argv)
      entercf.imaginary++;
  }
 
- printf("\n\n\nCOMPLEXE_FLOAT\n\nAvant inversion :\nVecteur X : ");
+ printf("\n\n\nCOMPLEXE_FLOAT\n\nAvant copie :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
      printf("%lf, %lf; ", cf1[i].real, cf1[i].imaginary);
  }
@@ -129,9 +129,9 @@ int main (int argc, char **argv)
  }
  printf("\n");
  
- mncblas_cswap (6, cf1, 1, cf2, 1) ;
+ mncblas_ccopy (6, cf1, 1, cf2, 1) ;
 
- printf("\nAprès inversion :\nVecteur X : ");
+ printf("\nAprès copie :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
      printf("%lf, %lf; ", cf1[i].real, cf1[i].imaginary);
  }
@@ -161,7 +161,7 @@ int main (int argc, char **argv)
      entercd.imaginary++;
  }
 
- printf("\n\n\nCOMPLEXE_DOUBLE\n\nAvant inversion :\nVecteur X : ");
+ printf("\n\n\nCOMPLEXE_DOUBLE\n\nAvant copie :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
      printf("%lf, %lf; ", cd1[i].real, cd1[i].imaginary);
  }
@@ -171,9 +171,9 @@ int main (int argc, char **argv)
  }
  printf("\n");
  
- mncblas_zswap (6, cd1, 1, cd2, 1) ;
+ mncblas_zcopy (6, cd1, 1, cd2, 1) ;
 
- printf("Après inversion :\nVecteur X : ");
+ printf("Après copie :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
      printf("%lf, %lf; ", cd1[i].real, cd1[i].imaginary);
  }

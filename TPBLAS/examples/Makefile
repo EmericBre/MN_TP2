@@ -1,4 +1,4 @@
-all: test_complexe2 test_complexe test_swap test_dot test_dot_dyn
+all: test_complexe2 test_complexe test_swap test_copy test_axpy test_asum test_iamin test_iamax test_dot test_dot_dyn
 
 INC_DIR=../include
 
@@ -36,12 +36,48 @@ test_complexe2.o: test_complexe2.c  $(INC_DIR)/complexe2.h
 test_complexe2: test_complexe2.o flop.o
 	gcc -o test_complexe2 test_complexe2.o flop.o $(OPTIONS_LINK_STATIC)
 
-test_swap.o: test_swap.c  $(INC_DIR)/mnblas.h
+test_swap.o: test_swap.c  $(INC_DIR)/mnblas.h $(INC_DIR)/complexe.h
 	gcc $(OPTIONS_COMPIL) -c test_swap.c
 
 test_swap: test_swap.o flop.o
 	gcc -o test_swap test_swap.o flop.o $(OPTIONS_LINK_STATIC)
 
+test_copy.o: test_copy.c  $(INC_DIR)/mnblas.h $(INC_DIR)/complexe.h
+	gcc $(OPTIONS_COMPIL) -c test_copy.c
+
+test_copy: test_copy.o flop.o
+	gcc -o test_copy test_copy.o flop.o $(OPTIONS_LINK_STATIC)
+
+test_axpy.o: test_axpy.c  $(INC_DIR)/mnblas.h $(INC_DIR)/complexe.h
+	gcc $(OPTIONS_COMPIL) -c test_axpy.c
+
+test_axpy: test_axpy.o flop.o
+	gcc -o test_axpy test_axpy.o flop.o $(OPTIONS_LINK_STATIC)
+
+test_asum.o: test_asum.c  $(INC_DIR)/mnblas.h $(INC_DIR)/complexe.h
+	gcc $(OPTIONS_COMPIL) -c test_asum.c
+
+test_asum: test_asum.o flop.o
+	gcc -o test_asum test_asum.o flop.o $(OPTIONS_LINK_STATIC)
+
+test_iamin.o: test_iamin.c  $(INC_DIR)/mnblas.h $(INC_DIR)/complexe.h
+	gcc $(OPTIONS_COMPIL) -c test_iamin.c
+
+test_iamin: test_iamin.o flop.o
+	gcc -o test_iamin test_iamin.o flop.o $(OPTIONS_LINK_STATIC)
+
+test_iamax.o: test_iamax.c  $(INC_DIR)/mnblas.h $(INC_DIR)/complexe.h
+	gcc $(OPTIONS_COMPIL) -c test_iamax.c
+
+test_iamax: test_iamax.o flop.o
+	gcc -o test_iamax test_iamax.o flop.o $(OPTIONS_LINK_STATIC)
+
+test_nrm2.o: test_nrm2.c  $(INC_DIR)/mnblas.h $(INC_DIR)/complexe.h
+	gcc $(OPTIONS_COMPIL) -c test_nrm2.c
+
+test_nrm2: test_nrm2.o flop.o
+	gcc -o test_nrm2 test_nrm2.o flop.o $(OPTIONS_LINK_STATIC)
+
 
 clean:
-	rm -f *.o test_dot test_dot_dyn test_complexe test_complexe2 test_swap *~
+	rm -f *.o test_dot test_dot_dyn test_complexe test_complexe2 test_swap test_copy test_axpy test_asum test_iamin test_iamax test_nrm2 *~

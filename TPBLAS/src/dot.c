@@ -1,4 +1,5 @@
-#include "mnblas.h"
+#include "../include/mnblas.h"
+#include "../include/complexe.h"
 #include <stdio.h>
 
 

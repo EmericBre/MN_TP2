@@ -12,16 +12,12 @@ int main (int argc, char **argv)
 {
 
  float* f1= malloc (sizeof(float*)*6);
- float* f2= malloc (sizeof(float*)*6);
 
- double* d1= malloc (sizeof(double*)*6);
- double* d2= malloc (sizeof(double*)*6);
+ double* d1= malloc (sizeof(double*)*6) ;
 
  complexe_float_t* cf1 = malloc (sizeof(complexe_float_t*)*6);
- complexe_float_t* cf2 = malloc (sizeof(complexe_float_t*)*6);
 
  complexe_double_t* cd1 = malloc (sizeof(complexe_double_t*)*6);
- complexe_double_t* cd2 = malloc (sizeof(complexe_double_t*)*6);
 
 //  unsigned long long int start, end ;
 
@@ -34,30 +30,17 @@ int main (int argc, char **argv)
      enter++;
  }
 
- for (int i = 0; i < 6; i++) {
-     f2[i] = enter;
-     enter++;
- }
-
- printf("\n\n\nFLOAT\n\nAvant inversion :\nVecteur X : ");
+ printf("\n\n\nFLOAT\n\nAvant iamax :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
      printf("%f, ", *f1+i);
- }
- printf("\nVecteur Y : ");
- for (int i = 0; i < 6; i++) {
-     printf("%f, ", *f2+i);
  }
  printf("\n");
  
- mncblas_sswap (6, f1, 1, f2, 1) ;
+ mnblas_isamin (6, f1, 1) ;
 
- printf("Après inversion :\nVecteur X : ");
+ printf("Après iamax :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
      printf("%f, ", *f1+i);
- }
- printf("\nVecteur Y : ");
- for (int i = 0; i < 6; i++) {
-     printf("%f, ", *f2+i);
  }
  printf("\n");
 
@@ -72,30 +55,17 @@ int main (int argc, char **argv)
      enterd++;
  }
 
- for (int i = 0; i < 6; i++) {
-     d2[i] = enterd;
-     enterd++;
- }
-
- printf("\n\n\nDOUBLE\n\nAvant inversion :\nVecteur X : ");
+ printf("\n\n\nDOUBLE\n\nAvant iamax :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
      printf("%lf, ", *d1+i);
- }
- printf("\nVecteur Y : ");
- for (int i = 0; i < 6; i++) {
-     printf("%lf, ", *d2+i);
  }
  printf("\n");
  
- mncblas_dswap (6, d1, 1, d2, 1) ;
+ mnblas_idamin (6, d1, 1) ;
 
- printf("Après inversion :\nVecteur X : ");
+ printf("Après iamax :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
      printf("%lf, ", *d1+i);
- }
- printf("\nVecteur Y : ");
- for (int i = 0; i < 6; i++) {
-     printf("%lf, ", *d2+i);
  }
  printf("\n");
 
@@ -112,32 +82,17 @@ int main (int argc, char **argv)
      entercf.imaginary++;
  }
 
- for (int i = 0; i < 6; i++) {
-     cf2[i].real = entercf.real;
-     cf2[i].imaginary = entercf.imaginary;
-     entercf.real++;
-     entercf.imaginary++;
- }
-
- printf("\n\n\nCOMPLEXE_FLOAT\n\nAvant inversion :\nVecteur X : ");
+ printf("\n\n\nCOMPLEXE_FLOAT\n\nAvant iamax :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
      printf("%lf, %lf; ", cf1[i].real, cf1[i].imaginary);
- }
- printf("\nVecteur Y : ");
- for (int i = 0; i < 6; i++) {
-     printf("%lf, %lf; ", cf2[i].real, cf2[i].imaginary);
  }
  printf("\n");
  
- mncblas_cswap (6, cf1, 1, cf2, 1) ;
+ mnblas_icamin (6, cf1, 1) ;
 
- printf("\nAprès inversion :\nVecteur X : ");
+ printf("\nAprès iamax :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
      printf("%lf, %lf; ", cf1[i].real, cf1[i].imaginary);
- }
- printf("\nVecteur Y : ");
- for (int i = 0; i < 6; i++) {
-     printf("%lf, %lf; ", cf2[i].real, cf2[i].imaginary);
  }
  printf("\n");
 
@@ -154,32 +109,17 @@ int main (int argc, char **argv)
      entercd.imaginary++;
  }
 
- for (int i = 0; i < 6; i++) {
-     cd2[i].real = entercd.real;
-     cd2[i].imaginary = entercd.imaginary;
-     entercd.real++;
-     entercd.imaginary++;
- }
-
- printf("\n\n\nCOMPLEXE_DOUBLE\n\nAvant inversion :\nVecteur X : ");
+ printf("\n\n\nCOMPLEXE_DOUBLE\n\nAvant iamax :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
      printf("%lf, %lf; ", cd1[i].real, cd1[i].imaginary);
- }
- printf("\nVecteur Y : ");
- for (int i = 0; i < 6; i++) {
-     printf("%lf, %lf; ", cd2[i].real, cd2[i].imaginary);
  }
  printf("\n");
  
- mncblas_zswap (6, cd1, 1, cd2, 1) ;
+ mnblas_izamin (6, cd1, 1) ;
 
- printf("Après inversion :\nVecteur X : ");
+ printf("Après iamax :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
      printf("%lf, %lf; ", cd1[i].real, cd1[i].imaginary);
- }
- printf("\nVecteur Y : ");
- for (int i = 0; i < 6; i++) {
-     printf("%lf, %lf; ", cd2[i].real, cd2[i].imaginary);
  }
  printf("\n");
 
