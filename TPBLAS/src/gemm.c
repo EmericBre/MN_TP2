@@ -18,6 +18,7 @@ void mncblas_sgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA,
 
    for (i = 0; i < M; i++) {
       for (j = 0; j < N; j++) {
+         save = 0.0;
          for (k = 0; k < K; k++) {
             save += alpha*A[i*K+k]*B[k*N+j]; 
          }
@@ -40,6 +41,7 @@ void mncblas_dgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA,
 
    for (i = 0; i < M; i++) {
       for (j = 0; j < N; j++) {
+         save = 0.0;
          for (k = 0; k < K; k++) {
             save += alpha*A[i*K+k]*B[k*N+j]; 
          }
@@ -62,8 +64,10 @@ void mncblas_cgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA,
 
    for (i = 0; i < M; i++) {
       for (j = 0; j < N; j++) {
+         save.real = 0.0;
+         save.imaginary = 0.0;
          for (k = 0; k < K; k++) {
-            save = add_complexe_float(save, mult_complexe_float(mult_complexe_float(*(complexe_float_t*)alpha, ((complexe_float_t*)A)[i*K+k]), ((complexe_float_t*)B)[k*N+j])); 
+            save = add_complexe_float(save, mult_complexe_float(mult_complexe_float(*(complexe_float_t*)alpha, ((complexe_float_t*)A)[i*K+k]), ((complexe_float_t*)B)[k*N+j]));
          }
          save = add_complexe_float(save, mult_complexe_float(*(complexe_float_t*)beta, ((complexe_float_t*)C)[i*N+j]));
          ((complexe_float_t*)C)[i*N+j] = save;
@@ -84,6 +88,8 @@ void mncblas_zgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA,
 
    for (i = 0; i < M; i++) {
       for (j = 0; j < N; j++) {
+         save.real = 0.0;
+         save.imaginary = 0.0;
          for (k = 0; k < K; k++) {
             save = add_complexe_double(save, mult_complexe_double(mult_complexe_double(*(complexe_double_t*)alpha, ((complexe_double_t*)A)[i*K+k]), ((complexe_double_t*)B)[k*N+j])); 
          }

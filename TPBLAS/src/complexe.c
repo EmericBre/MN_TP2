@@ -1,4 +1,5 @@
 #include "complexe.h"
+#include <stdio.h>
 
 complexe_float_t add_complexe_float (const complexe_float_t c1, const complexe_float_t c2)
 {
