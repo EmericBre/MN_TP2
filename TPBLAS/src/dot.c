@@ -42,17 +42,16 @@ void   mncblas_cdotu_sub(const int N, const void *X, const int incX,
 {
   register unsigned int i = 0 ;
   register unsigned int j = 0 ;
-  complexe_float_t dot;
-  dot.real = 0.0;
-  dot.imaginary = 0.0;
+  ((complexe_float_t *)dotu) [i].real = 0.0;
+  ((complexe_float_t *)dotu) [i].imaginary = 0.0;
 
   
   for (i = 0 ; i < N ; i += incX)
     {
-      dot.real += ((complexe_float_t *)X) [i].real * ((complexe_float_t *)Y) [j].real ;
-      dot.real -= ((complexe_float_t *)X) [i].imaginary * ((complexe_float_t *)Y) [j].imaginary ;
-      dot.imaginary += ((complexe_float_t *)X) [i].real * ((complexe_float_t *)Y) [j].imaginary ;
-      dot.imaginary += ((complexe_float_t *)X) [i].imaginary * ((complexe_float_t *)Y) [j].real ;
+      ((complexe_float_t *)dotu) [i].real += ((complexe_float_t *)X) [i].real * ((complexe_float_t *)Y) [j].real ;
+      ((complexe_float_t *)dotu) [i].real -= ((complexe_float_t *)X) [i].imaginary * ((complexe_float_t *)Y) [j].imaginary ;
+      ((complexe_float_t *)dotu) [i].imaginary += ((complexe_float_t *)X) [i].real * ((complexe_float_t *)Y) [j].imaginary ;
+      ((complexe_float_t *)dotu) [i].imaginary += ((complexe_float_t *)X) [i].imaginary * ((complexe_float_t *)Y) [j].real ;
       j+=incY ;
     }
 
@@ -64,17 +63,16 @@ void   mncblas_cdotc_sub(const int N, const void *X, const int incX,
 {
   register unsigned int i = 0 ;
   register unsigned int j = 0 ;
-  complexe_float_t dot;
-  dot.real = 0.0;
-  dot.imaginary = 0.0;
+  ((complexe_float_t *)dotc) [i].real = 0.0;
+  ((complexe_float_t *)dotc) [i].imaginary = 0.0;
 
   
   for (i = 0 ; i < N ; i += incX)
     {
-      dot.real += ((complexe_float_t *)X) [i].real * ((complexe_float_t *)Y) [j].real ;
-      dot.real += ((complexe_float_t *)X) [i].imaginary * ((complexe_float_t *)Y) [j].imaginary ;
-      dot.imaginary += ((complexe_float_t *)X) [i].real * ((complexe_float_t *)Y) [j].imaginary ;
-      dot.imaginary -= ((complexe_float_t *)X) [i].imaginary * ((complexe_float_t *)Y) [j].real ;
+      ((complexe_float_t *)dotc) [i].real += ((complexe_float_t *)X) [i].real * ((complexe_float_t *)Y) [j].real ;
+      ((complexe_float_t *)dotc) [i].real += ((complexe_float_t *)X) [i].imaginary * ((complexe_float_t *)Y) [j].imaginary ;
+      ((complexe_float_t *)dotc) [i].imaginary += ((complexe_float_t *)X) [i].real * ((complexe_float_t *)Y) [j].imaginary ;
+      ((complexe_float_t *)dotc) [i].imaginary -= ((complexe_float_t *)X) [i].imaginary * ((complexe_float_t *)Y) [j].real ;
       j+=incY ;
     }
 
@@ -86,17 +84,16 @@ void   mncblas_zdotu_sub(const int N, const void *X, const int incX,
 {
   register unsigned int i = 0 ;
   register unsigned int j = 0 ;
-  complexe_double_t dot;
-  dot.real = 0.0;
-  dot.imaginary = 0.0;
+  ((complexe_double_t *)dotu) [i].real = 0.0;
+  ((complexe_double_t *)dotu) [i].imaginary = 0.0;
 
   
   for (i = 0 ; i < N ; i += incX)
     {
-      dot.real += ((complexe_double_t *)X) [i].real * ((complexe_double_t *)Y) [j].real ;
-      dot.real -= ((complexe_double_t *)X) [i].imaginary * ((complexe_double_t *)Y) [j].imaginary ;
-      dot.imaginary += ((complexe_double_t *)X) [i].real * ((complexe_double_t *)Y) [j].imaginary ;
-      dot.imaginary += ((complexe_double_t *)X) [i].imaginary * ((complexe_double_t *)Y) [j].real ;
+      ((complexe_double_t *)dotu) [i].real += ((complexe_double_t *)X) [i].real * ((complexe_double_t *)Y) [j].real ;
+      ((complexe_double_t *)dotu) [i].real -= ((complexe_double_t *)X) [i].imaginary * ((complexe_double_t *)Y) [j].imaginary ;
+      ((complexe_double_t *)dotu) [i].imaginary += ((complexe_double_t *)X) [i].real * ((complexe_double_t *)Y) [j].imaginary ;
+      ((complexe_double_t *)dotu) [i].imaginary += ((complexe_double_t *)X) [i].imaginary * ((complexe_double_t *)Y) [j].real ;
       j+=incY ;
     }
 
@@ -108,17 +105,16 @@ void   mncblas_zdotc_sub(const int N, const void *X, const int incX,
 {
   register unsigned int i = 0 ;
   register unsigned int j = 0 ;
-  complexe_double_t dot;
-  dot.real = 0.0;
-  dot.imaginary = 0.0;
+  ((complexe_double_t *)dotc) [i].real = 0.0;
+  ((complexe_double_t *)dotc) [i].imaginary = 0.0;
 
   
   for (i = 0 ; i < N ; i += incX)
     {
-      dot.real += ((complexe_double_t *)X) [i].real * ((complexe_double_t *)Y) [j].real ;
-      dot.real += ((complexe_double_t *)X) [i].imaginary * ((complexe_double_t *)Y) [j].imaginary ;
-      dot.imaginary += ((complexe_double_t *)X) [i].real * ((complexe_double_t *)Y) [j].imaginary ;
-      dot.imaginary -= ((complexe_double_t *)X) [i].imaginary * ((complexe_double_t *)Y) [j].real ;
+      ((complexe_double_t *)dotc) [i].real += ((complexe_double_t *)X) [i].real * ((complexe_double_t *)Y) [j].real ;
+      ((complexe_double_t *)dotc) [i].real += ((complexe_double_t *)X) [i].imaginary * ((complexe_double_t *)Y) [j].imaginary ;
+      ((complexe_double_t *)dotc) [i].imaginary += ((complexe_double_t *)X) [i].real * ((complexe_double_t *)Y) [j].imaginary ;
+      ((complexe_double_t *)dotc) [i].imaginary -= ((complexe_double_t *)X) [i].imaginary * ((complexe_double_t *)Y) [j].real ;
       j+=incY ;
     }
 

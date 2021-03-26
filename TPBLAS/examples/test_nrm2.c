@@ -6,7 +6,32 @@
 
 #include "flop.h"
 
-#define    NB_FOIS        4194304
+#define    NB_FOIS        10
+
+float *vec1;
+
+double *vec1d;
+
+complexe_float_t *vec1cf;
+
+complexe_double_t *vec1cd;
+
+complexe_float_t *nrm2cf;
+complexe_double_t *nrm2cd;
+
+void init()
+{
+    vec1 = malloc(sizeof(float *) * VECSIZE);
+
+    vec1d = malloc(sizeof(double *) * VECSIZE);
+
+    vec1cf = malloc(sizeof(complexe_float_t *) * VECSIZE);
+
+    vec1cd = malloc(sizeof(float *) * (VECSIZE * 2));
+
+    nrm2cf = malloc(sizeof(complexe_float_t *));
+    nrm2cd = malloc(sizeof(double *) * 2);
+}
 
 int main (int argc, char **argv)
 {
@@ -54,10 +79,6 @@ int main (int argc, char **argv)
  float cd2;
 
  printf("\n");
-
-//  unsigned long long int start, end ;
-
- init_flop () ;
 
  printf("FLOAT\n\nAvant nrm2 :\nVecteur X : ");
  for (int i = 0; i < 6; i++) {
@@ -118,21 +139,87 @@ int main (int argc, char **argv)
  printf("Après nrm2 :\nRésultat : ");
  printf("%f\n", cd2);
 
-//  printf ("Addition de c1 et c2 : c3.r %f c3.i %f\n", c3.real, c3.imaginary) ;
+printf("\n\n=========================================================\n");
+    printf("PERFORMANCES");
+    printf("\n=========================================================\n\n\n");
 
-//  start =_rdtsc () ;
- 
-//  for (i = 0 ; i < NB_FOIS; i++)
-//    {
-//      cd3 = add_complexe_double (cd1, cd2) ;
-//    }
+    unsigned long long start, end;
+    int i;
 
-//  end = _rdtsc () ;
+    init();
 
-//   printf ("apres boucle cd3.real %f cd3.imaginary %f %lld cycles \n", cd3.real, cd3.imaginary, end-start) ;
+    nrm2cf[0].real = 0.0;
+    nrm2cf[0].imaginary = 0.0;
+    nrm2cd[0].real = 0.0;
+    nrm2cd[0].imaginary = 0.0;
 
-//   calcul_flop ("calcul complexe ", NB_FOIS*4, end-start) ;
-  exit (0) ;
+    printf("\n\n\nFLOAT\n\n");
+
+    init_flop();
+
+    for (i = 0; i < NB_FOIS; i++)
+    {
+        vector_init(vec1, 1.0, VECSIZE);
+
+        start = _rdtsc();
+        f2 = mnblas_snrm2(6, vec1, 1);
+        end = _rdtsc();
+
+        printf("mnblas_snrm2 %d : res = %3.2f nombre de cycles: %Ld \n", i, f2, end - start);
+        calcul_flop("snrm2 ", VECSIZE, end - start);
+    }
+
+    printf("\n\n\nDOUBLE\n\n");
+
+    init_flop();
+
+    for (i = 0; i < NB_FOIS; i++)
+    {
+        vector_initd(vec1d, 1.0, VECSIZE);
+
+        start = _rdtsc();
+        d2 = mnblas_dnrm2(6, vec1d, 1);
+        end = _rdtsc();
+
+        printf("mnblas_dnrm2 %d : res = %3.2f nombre de cycles: %Ld \n", i, d2, end - start);
+        calcul_flop("dnrm2 ", VECSIZE, end - start);
+    }
+
+    printf("\n\n\nCOMPLEXE FLOAT\n\n");
+
+    init_flop();
+
+    for (i = 0; i < NB_FOIS; i++)
+    {
+        vector_initcf(vec1cf, nrm2cf[0], VECSIZE);
+
+        start = _rdtsc();
+        cf2 = mnblas_scnrm2(6, vec1cf, 1);
+        end = _rdtsc();
+
+        printf("mnblas_scnrm2 %d : res = %3.2f nombre de cycles: %Ld \n", i, cf2, end - start);
+        calcul_flop("scnrm2 ", VECSIZE, end - start);
+    }
+
+    printf("\n\n\nCOMPLEXE DOUBLE\n\n");
+
+    init_flop();
+
+    for (i = 0; i < NB_FOIS; i++)
+    {
+        vector_initcd(vec1cd, nrm2cd[0], VECSIZE);
+
+        start = _rdtsc();
+        cd2 = mnblas_dznrm2(6, vec1cd, 1);
+        end = _rdtsc();
+
+        printf("mnblas_dznrm2 %d : res = %3.2f nombre de cycles: %Ld \n", i, cd2, end - start);
+        calcul_flop("dznrm2 ", VECSIZE, end - start);
+    }
+
+    printf("\n");
+
+    exit(0);
 
 
 }
