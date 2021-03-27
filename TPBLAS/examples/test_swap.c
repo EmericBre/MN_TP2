@@ -231,6 +231,7 @@ int main(int argc, char **argv)
 
     unsigned long long start, end;
     int i;
+    long long int moyenne = 0;
 
     init();
 
@@ -252,11 +253,15 @@ int main(int argc, char **argv)
         mncblas_sswap(6, vec1, 1, vec2, 1);
         end = _rdtsc();
 
-        printf("mncblas_sswap %d : nombre de cycles: %Ld \n", i, end - start);
-        calcul_flop("sswap ", 2 * VECSIZE, end - start);
+        moyenne += end - start;
     }
 
+    printf("mncblas_sswap moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("sswap ", 2 * VECSIZE * NB_FOIS, moyenne);
+
     printf("\n\n\nDOUBLE\n\n");
+
+    moyenne = 0;
 
     init_flop();
 
@@ -269,11 +274,15 @@ int main(int argc, char **argv)
         mncblas_dswap(6, vec1d, 1, vec2d, 1);
         end = _rdtsc();
 
-        printf("mncblas_dswap %d : nombre de cycles: %Ld \n", i, end - start);
-        calcul_flop("dswap ", 2 * VECSIZE, end - start);
+        moyenne += end - start;
     }
 
+    printf("mncblas_dswap moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("dswap ", 2 * VECSIZE * NB_FOIS, moyenne);
+
     printf("\n\n\nCOMPLEXE FLOAT\n\n");
+
+    moyenne = 0;
 
     init_flop();
 
@@ -286,11 +295,15 @@ int main(int argc, char **argv)
         mncblas_cswap(6, vec1cf, 1, vec2cf, 1);
         end = _rdtsc();
 
-        printf("mncblas_cswap %d : nombre de cycles: %Ld \n", i, end - start);
-        calcul_flop("cswap ", 2 * VECSIZE, end - start);
+        moyenne += end - start;
     }
 
+    printf("mncblas_cswap moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("cswap ", 2 * VECSIZE * NB_FOIS, moyenne);
+
     printf("\n\n\nCOMPLEXE DOUBLE\n\n");
+
+    moyenne = 0;
 
     init_flop();
 
@@ -303,9 +316,11 @@ int main(int argc, char **argv)
         mncblas_zswap(6, vec1cd, 1, vec2cd, 1);
         end = _rdtsc();
 
-        printf("mncblas_zswap %d : nombre de cycles: %Ld \n", i, end - start);
-        calcul_flop("zswap ", 2 * VECSIZE, end - start);
+        moyenne += end - start;
     }
+
+    printf("mncblas_zswap moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("zswap ", 2 * VECSIZE * NB_FOIS, moyenne);
 
     printf("\n");
 
