@@ -429,5 +429,36 @@ int main(int argc, char **argv)
 
     printf("\n");
 
+    free(fA);
+    free(fB);
+    free(fC);
+    free(dA);
+    free(dB);
+    free(dC);
+    free(cfA);
+    free(cfB);
+    free(cfC);
+    free(cdA);
+    free(cdB);
+    free(cdC);
+    free(alphacf);
+    free(alphacd);
+    free(betacf);
+    free(betacd);
+    free(vec1);
+    free(vec2);
+    free(vec3);
+    free(vec1d);
+    free(vec2d);
+    free(vec3d);
+    free(vec1cf);
+    free(vec2cf);
+    free(vec3cf);
+    free(vec1cd);
+    free(vec2cd);
+    free(vec3cd);
+    free(gemmcf);
+    free(gemmcd);
+
     exit(0);
 }

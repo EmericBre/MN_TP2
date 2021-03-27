@@ -33,12 +33,11 @@ void init()
 
   vec1cf = malloc(sizeof(complexe_float_t *) * VECSIZE);
   vec2cf = malloc(sizeof(complexe_float_t *) * VECSIZE);
+  dotcf = malloc(sizeof(complexe_float_t *) * VECSIZE);
 
-  vec1cd = malloc(sizeof(float *) * (VECSIZE * 2));
-  vec2cd = malloc(sizeof(float *) * (VECSIZE * 2));
-
-  dotcf = malloc(sizeof(complexe_float_t *));
-  dotcd = malloc(sizeof(double *) * 2);
+  vec1cd = malloc(sizeof(double *) * (VECSIZE * 2));
+  vec2cd = malloc(sizeof(double *) * (VECSIZE * 2));
+  dotcd = malloc(sizeof(double *) * (VECSIZE * 2));
 }
 
 int main(int argc, char **argv)
@@ -376,6 +375,7 @@ int main(int argc, char **argv)
 
     start = _rdtsc();
     mncblas_cdotu_sub(VECSIZE, vec1cf, 1, vec2cf, 1, dotcf);
+    printf("test\n");
     end = _rdtsc();
 
     printf("mncblas_cdotu_sub %d : nombre de cycles: %Ld \n", i, end - start);

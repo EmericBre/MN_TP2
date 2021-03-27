@@ -8,35 +8,10 @@
 
 #define NB_FOIS 10
 
-float *vec1;
-
-double *vec1d;
-
-complexe_float_t *vec1cf;
-
-complexe_double_t *vec1cd;
-
-complexe_float_t *iamincf;
-complexe_double_t *iamincd;
-
-void init()
-{
-    vec1 = malloc(sizeof(float *) * VECSIZE);
-
-    vec1d = malloc(sizeof(double *) * VECSIZE);
-
-    vec1cf = malloc(sizeof(complexe_float_t *) * VECSIZE);
-
-    vec1cd = malloc(sizeof(float *) * (VECSIZE * 2));
-
-    iamincf = malloc(sizeof(complexe_float_t *));
-    iamincd = malloc(sizeof(double *) * 2);
-}
-
 int main(int argc, char **argv)
 {
 
-    float *f1 = malloc(sizeof(float *) * 6);
+    float *f1 = malloc(sizeof(float *) * VECSIZE);
     f1[0] = 3.0;
     f1[1] = 2.0;
     f1[2] = 4.0;
@@ -47,7 +22,7 @@ int main(int argc, char **argv)
 
     printf("\n");
 
-    double *d1 = malloc(sizeof(double *) * 6);
+    double *d1 = malloc(sizeof(double *) * VECSIZE);
     d1[0] = 3.0;
     d1[1] = 2.0;
     d1[2] = 4.0;
@@ -58,7 +33,7 @@ int main(int argc, char **argv)
 
     printf("\n");
 
-    complexe_float_t *cf1 = malloc(sizeof(complexe_float_t *) * 6);
+    complexe_float_t *cf1 = malloc(sizeof(complexe_float_t *) * VECSIZE);
     cf1[0].real = 3.0;
     cf1[0].imaginary = -2.0;
     cf1[1].real = 2.0;
@@ -75,7 +50,7 @@ int main(int argc, char **argv)
 
     printf("\n");
 
-    complexe_double_t *cd1 = malloc(sizeof(complexe_double_t *) * 6);
+    complexe_double_t *cd1 = malloc(sizeof(complexe_double_t *) * VECSIZE);
     cd1[0].real = 3.0;
     cd1[0].imaginary = -2.0;
     cd1[1].real = 2.0;
@@ -89,6 +64,9 @@ int main(int argc, char **argv)
     cd1[5].real = 2.0;
     cd1[5].imaginary = -2.0;
     float cd2;
+
+    complexe_float_t *iamincf = malloc(sizeof(complexe_float_t *));
+    complexe_double_t* iamincd = malloc(sizeof(double *) * 2);
 
     printf("\n");
 
@@ -147,8 +125,6 @@ int main(int argc, char **argv)
     unsigned long long start, end;
     int i;
 
-    init();
-
     iamincf[0].real = 0.0;
     iamincf[0].imaginary = 0.0;
     iamincd[0].real = 0.0;
@@ -160,10 +136,10 @@ int main(int argc, char **argv)
 
     for (i = 0; i < NB_FOIS; i++)
     {
-        vector_init(vec1, 1.0, VECSIZE);
+        vector_init(f1, 1.0, VECSIZE);
 
         start = _rdtsc();
-        f2 = mnblas_isamin(6, vec1, 1);
+        f2 = mnblas_isamin(VECSIZE, f1, 1);
         end = _rdtsc();
 
         printf("mnblas_isamin %d : res = %3.2f nombre de cycles: %Ld \n", i, f2, end - start);
@@ -176,10 +152,10 @@ int main(int argc, char **argv)
 
     for (i = 0; i < NB_FOIS; i++)
     {
-        vector_initd(vec1d, 1.0, VECSIZE);
+        vector_initd(d1, 1.0, VECSIZE);
 
         start = _rdtsc();
-        d2 = mnblas_idamin(6, vec1d, 1);
+        d2 = mnblas_idamin(VECSIZE, d1, 1);
         end = _rdtsc();
 
         printf("mnblas_idamin %d : res = %3.2f nombre de cycles: %Ld \n", i, d2, end - start);
@@ -192,10 +168,10 @@ int main(int argc, char **argv)
 
     for (i = 0; i < NB_FOIS; i++)
     {
-        vector_initcf(vec1cf, iamincf[0], VECSIZE);
+        vector_initcf(cf1, iamincf[0], VECSIZE);
 
         start = _rdtsc();
-        cf2 = mnblas_icamin(6, vec1cf, 1);
+        cf2 = mnblas_icamin(VECSIZE, cf1, 1);
         end = _rdtsc();
 
         printf("mnblas_icamin %d : res = %3.2f nombre de cycles: %Ld \n", i, cf2, end - start);
@@ -208,10 +184,10 @@ int main(int argc, char **argv)
 
     for (i = 0; i < NB_FOIS; i++)
     {
-        vector_initcd(vec1cd, iamincd[0], VECSIZE);
+        vector_initcd(cd1, iamincd[0], VECSIZE);
 
         start = _rdtsc();
-        cd2 = mnblas_izamin(6, vec1cd, 1);
+        cd2 = mnblas_izamin(VECSIZE, cd1, 1);
         end = _rdtsc();
 
         printf("mnblas_izamin %d : res = %3.2f nombre de cycles: %Ld \n", i, cd2, end - start);
@@ -219,6 +195,12 @@ int main(int argc, char **argv)
     }
 
     printf("\n");
+
+    free(f1);
+    free(d1);
+    free(cd1);
+    free(iamincf);
+    free(iamincd);
 
     exit(0);
 }

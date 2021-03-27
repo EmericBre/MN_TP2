@@ -8,35 +8,10 @@
 
 #define NB_FOIS 10
 
-float *vec1;
-
-double *vec1d;
-
-complexe_float_t *vec1cf;
-
-complexe_double_t *vec1cd;
-
-complexe_float_t *iamaxcf;
-complexe_double_t *iamaxcd;
-
-void init()
-{
-    vec1 = malloc(sizeof(float *) * VECSIZE);
-
-    vec1d = malloc(sizeof(double *) * VECSIZE);
-
-    vec1cf = malloc(sizeof(complexe_float_t *) * VECSIZE);
-
-    vec1cd = malloc(sizeof(float *) * (VECSIZE * 2));
-
-    iamaxcf = malloc(sizeof(complexe_float_t *));
-    iamaxcd = malloc(sizeof(double *) * 2);
-}
-
 int main(int argc, char **argv)
 {
 
-    float *f1 = malloc(sizeof(float *) * 6);
+    float *f1 = malloc(sizeof(float *) * VECSIZE);
     f1[0] = 3.0;
     f1[1] = 2.0;
     f1[2] = 4.0;
@@ -47,7 +22,7 @@ int main(int argc, char **argv)
 
     printf("\n");
 
-    double *d1 = malloc(sizeof(double *) * 6);
+    double *d1 = malloc(sizeof(double *) * VECSIZE);
     d1[0] = 3.0;
     d1[1] = 2.0;
     d1[2] = 4.0;
@@ -58,7 +33,7 @@ int main(int argc, char **argv)
 
     printf("\n");
 
-    complexe_float_t *cf1 = malloc(sizeof(complexe_float_t *) * 6);
+    complexe_float_t *cf1 = malloc(sizeof(complexe_float_t *) * VECSIZE);
     cf1[0].real = 3.0;
     cf1[0].imaginary = -2.0;
     cf1[1].real = 2.0;
@@ -75,7 +50,7 @@ int main(int argc, char **argv)
 
     printf("\n");
 
-    complexe_double_t *cd1 = malloc(sizeof(complexe_double_t *) * 6);
+    complexe_double_t *cd1 = malloc(sizeof(complexe_double_t *) * VECSIZE);
     cd1[0].real = 3.0;
     cd1[0].imaginary = -2.0;
     cd1[1].real = 2.0;
@@ -90,8 +65,11 @@ int main(int argc, char **argv)
     cd1[5].imaginary = -2.0;
     float cd2;
 
-    printf("\n");
+    complexe_float_t *iamaxcf = malloc(sizeof(complexe_float_t *));
+    complexe_double_t* iamaxcd = malloc(sizeof(double *) * 2);
 
+    printf("\n");
+    
     printf("FLOAT\n\nAvant iamax :\nVecteur X : ");
     for (int i = 0; i < 6; i++)
     {
@@ -147,8 +125,6 @@ int main(int argc, char **argv)
     unsigned long long start, end;
     int i;
 
-    init();
-
     iamaxcf[0].real = 0.0;
     iamaxcf[0].imaginary = 0.0;
     iamaxcd[0].real = 0.0;
@@ -160,10 +136,9 @@ int main(int argc, char **argv)
 
     for (i = 0; i < NB_FOIS; i++)
     {
-        vector_init(vec1, 1.0, VECSIZE);
-
+        vector_init(f1, 1.0, 6);
         start = _rdtsc();
-        f2 = mnblas_isamax(6, vec1, 1);
+        f2 = mnblas_isamax(6, f1, 1);
         end = _rdtsc();
 
         printf("mnblas_isamax %d : res = %3.2f nombre de cycles: %Ld \n", i, f2, end - start);
@@ -176,10 +151,10 @@ int main(int argc, char **argv)
 
     for (i = 0; i < NB_FOIS; i++)
     {
-        vector_initd(vec1d, 1.0, VECSIZE);
+        vector_initd(d1, 1.0, VECSIZE);
 
         start = _rdtsc();
-        d2 = mnblas_idamax(6, vec1d, 1);
+        d2 = mnblas_idamax(VECSIZE, d1, 1);
         end = _rdtsc();
 
         printf("mnblas_idamax %d : res = %3.2f nombre de cycles: %Ld \n", i, d2, end - start);
@@ -192,10 +167,10 @@ int main(int argc, char **argv)
 
     for (i = 0; i < NB_FOIS; i++)
     {
-        vector_initcf(vec1cf, iamaxcf[0], VECSIZE);
+        vector_initcf(cf1, iamaxcf[0], VECSIZE);
 
         start = _rdtsc();
-        cf2 = mnblas_icamax(6, vec1cf, 1);
+        cf2 = mnblas_icamax(VECSIZE, cf1, 1);
         end = _rdtsc();
 
         printf("mnblas_icamax %d : res = %3.2f nombre de cycles: %Ld \n", i, cf2, end - start);
@@ -208,10 +183,10 @@ int main(int argc, char **argv)
 
     for (i = 0; i < NB_FOIS; i++)
     {
-        vector_initcd(vec1cd, iamaxcd[0], VECSIZE);
+        vector_initcd(cd1, iamaxcd[0], VECSIZE);
 
         start = _rdtsc();
-        cd2 = mnblas_izamax(6, vec1cd, 1);
+        cd2 = mnblas_izamax(VECSIZE, cd1, 1);
         end = _rdtsc();
 
         printf("mnblas_izamax %d : res = %3.2f nombre de cycles: %Ld \n", i, cd2, end - start);
@@ -219,6 +194,12 @@ int main(int argc, char **argv)
     }
 
     printf("\n");
+
+    free(f1);
+    free(d1);
+    free(cd1);
+    free(iamaxcf);
+    free(iamaxcd);
 
     exit(0);
 }

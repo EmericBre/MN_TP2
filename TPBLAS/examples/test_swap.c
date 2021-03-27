@@ -309,5 +309,24 @@ int main(int argc, char **argv)
 
     printf("\n");
 
+    free(f1);
+    free(f2);
+    free(d1);
+    free(d2);
+    free(cf1);
+    free(cf2);
+    free(cd1);
+    free(cd2);
+    free(vec1);
+    free(vec2);
+    free(vec1d);
+    free(vec2d);
+    free(vec1cf);
+    free(vec2cf);
+    free(vec1cd);
+    free(vec2cd);
+    free(swapcf);
+    free(swapcd);
+
     exit(0);
 }
