@@ -6,7 +6,7 @@
 
 #include "flop.h"
 
-#define NB_FOIS 10
+#define NB_FOIS 4194
 
 float *vec1;
 float *vec2;
@@ -317,7 +317,7 @@ int main(int argc, char **argv)
 
   unsigned long long start, end;
   int i;
-  float res;
+  long long int moyenne = 0;
 
   init();
 
@@ -334,19 +334,20 @@ int main(int argc, char **argv)
   {
     vector_init(vec1, 1.0, VECSIZE);
     vector_init(vec2, 2.0, VECSIZE);
-    res = 0.0;
 
     start = _rdtsc();
-    res = mncblas_sdot(VECSIZE, vec1, 1, vec2, 1);
+    mncblas_sdot(VECSIZE, vec1, 1, vec2, 1);
     end = _rdtsc();
 
-    printf("mncblas_sdot %d : res = %3.2f nombre de cycles: %Ld \n", i, res, end - start);
-    calcul_flop("sdot ", 2 * VECSIZE, end - start);
+    moyenne += end - start;
   }
 
-  double resd;
+  printf("mncblas_sdot moyenne : nombre de cycles: %Ld \n", moyenne / NB_FOIS);
+  calcul_flop("sdot ", 2 * VECSIZE * NB_FOIS, moyenne);
 
   printf("\n\n\nDOUBLE\n\n");
+
+  moyenne = 0;
 
   init_flop();
 
@@ -354,17 +355,20 @@ int main(int argc, char **argv)
   {
     vector_initd(vec1d, 1.0, VECSIZE);
     vector_initd(vec2d, 2.0, VECSIZE);
-    resd = 0.0;
 
     start = _rdtsc();
-    resd = mncblas_ddot(VECSIZE, vec1d, 1, vec2d, 1);
+    mncblas_ddot(VECSIZE, vec1d, 1, vec2d, 1);
     end = _rdtsc();
 
-    printf("mncblas_ddot %d : res = %3.2f nombre de cycles: %Ld \n", i, resd, end - start);
-    calcul_flop("ddot ", 2 * VECSIZE, end - start);
+    moyenne += end - start;
   }
 
+  printf("mncblas_ddot moyenne : nombre de cycles: %Ld \n", moyenne / NB_FOIS);
+  calcul_flop("ddot ", 2 * VECSIZE * NB_FOIS, moyenne);
+
   printf("\n\n\nCOMPLEXE FLOAT\n\n");
+
+  moyenne = 0;
 
   init_flop();
 
@@ -375,14 +379,17 @@ int main(int argc, char **argv)
 
     start = _rdtsc();
     mncblas_cdotu_sub(VECSIZE, vec1cf, 1, vec2cf, 1, dotcf);
-    printf("test\n");
     end = _rdtsc();
 
-    printf("mncblas_cdotu_sub %d : nombre de cycles: %Ld \n", i, end - start);
-    calcul_flop("cdotu_sub ", 2 * VECSIZE, end - start);
+    moyenne += end - start;
   }
 
+  printf("mncblas_cdotu_sub moyenne : nombre de cycles: %Ld \n", moyenne / NB_FOIS);
+  calcul_flop("cdotu_sub ", 2 * VECSIZE * NB_FOIS, moyenne);
+
   printf("\n");
+
+  moyenne = 0;
 
   init_flop();
 
@@ -395,11 +402,15 @@ int main(int argc, char **argv)
     mncblas_cdotc_sub(VECSIZE, vec1cf, 1, vec2cf, 1, dotcf);
     end = _rdtsc();
 
-    printf("mncblas_cdotc_sub %d : nombre de cycles: %Ld \n", i, end - start);
-    calcul_flop("cdotc_sub ", 2 * VECSIZE, end - start);
+    moyenne += end - start;
   }
 
+  printf("mncblas_cdotc_sub moyenne : nombre de cycles: %Ld \n", moyenne / NB_FOIS);
+  calcul_flop("cdotc_sub ", 2 * VECSIZE * NB_FOIS, moyenne);
+
   printf("\n\n\nCOMPLEXE DOUBLE\n\n");
+
+  moyenne = 0;
 
   init_flop();
 
@@ -412,11 +423,15 @@ int main(int argc, char **argv)
     mncblas_zdotu_sub(VECSIZE, vec1cd, 1, vec2cd, 1, dotcd);
     end = _rdtsc();
 
-    printf("mncblas_zdotu_sub %d : nombre de cycles: %Ld \n", i, end - start);
-    calcul_flop("zdotu_sub ", 2 * VECSIZE, end - start);
+    moyenne += end - start;
   }
 
+  printf("mncblas_zdotu_sub moyenne : nombre de cycles: %Ld \n", moyenne / NB_FOIS);
+  calcul_flop("zdotu_sub ", 2 * VECSIZE * NB_FOIS, moyenne);
+
   printf("\n");
+
+  moyenne = 0;
 
   init_flop();
 
@@ -429,7 +444,9 @@ int main(int argc, char **argv)
     mncblas_zdotc_sub(VECSIZE, vec1cd, 1, vec2cd, 1, dotcd);
     end = _rdtsc();
 
-    printf("mncblas_zdotc_sub %d : nombre de cycles: %Ld \n", i, end - start);
-    calcul_flop("zdotc_sub ", 2 * VECSIZE, end - start);
+    moyenne += end - start;
   }
+
+  printf("mncblas_zdotc_sub moyenne : nombre de cycles: %Ld \n", moyenne / NB_FOIS);
+  calcul_flop("zdotc_sub ", 2 * VECSIZE * NB_FOIS, moyenne);
 }

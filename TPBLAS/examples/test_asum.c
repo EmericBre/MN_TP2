@@ -6,7 +6,7 @@
 
 #include "flop.h"
 
-#define NB_FOIS 10
+#define NB_FOIS 4194
 
 int main(int argc, char **argv)
 {
@@ -125,6 +125,7 @@ int main(int argc, char **argv)
 
     unsigned long long start, end;
     int i;
+    long long int moyenne = 0;
 
     asumcf[0].real = 0.0;
     asumcf[0].imaginary = 0.0;
@@ -133,8 +134,6 @@ int main(int argc, char **argv)
 
     printf("\n\n\nFLOAT\n\n");
 
-    float res;
-
     init_flop();
 
     for (i = 0; i < NB_FOIS; i++)
@@ -142,16 +141,18 @@ int main(int argc, char **argv)
         vector_init(f1, 1.0, VECSIZE);
 
         start = _rdtsc();
-        res = mnblas_sasum(VECSIZE, f1, 1);
+        mnblas_sasum(VECSIZE, f1, 1);
         end = _rdtsc();
 
-        printf("mncblas_sasum %d : res = %3.2f nombre de cycles: %Ld \n", i, res, end - start);
-        calcul_flop("sasum ", VECSIZE, end - start);
+        moyenne += end - start;
     }
+
+    printf("mnblas_sasum moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("sasum ", VECSIZE * NB_FOIS, moyenne);
 
     printf("\n\n\nDOUBLE\n\n");
 
-    float resd;
+    moyenne = 0;
 
     init_flop();
 
@@ -160,16 +161,18 @@ int main(int argc, char **argv)
         vector_initd(d1, 1.0, VECSIZE);
 
         start = _rdtsc();
-        resd = mnblas_dasum(VECSIZE, d1, 1);
+        mnblas_dasum(VECSIZE, d1, 1);
         end = _rdtsc();
 
-        printf("mncblas_dasum %d : res = %3.2f nombre de cycles: %Ld \n", i, resd, end - start);
-        calcul_flop("dasum ", VECSIZE, end - start);
+        moyenne += end - start;
     }
+
+    printf("mncblas_dasum moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("dasum ", VECSIZE * NB_FOIS, moyenne);
 
     printf("\n\n\nCOMPLEXE FLOAT\n\n");
 
-    float rescf;
+    moyenne = 0;
 
     init_flop();
 
@@ -178,16 +181,18 @@ int main(int argc, char **argv)
         vector_initcf(cf1, asumcf[0], VECSIZE);
 
         start = _rdtsc();
-        rescf = mnblas_scasum(VECSIZE, cf1, 1);
+        mnblas_scasum(VECSIZE, cf1, 1);
         end = _rdtsc();
 
-        printf("mncblas_scasum %d : res = %3.2f nombre de cycles: %Ld \n", i, rescf, end - start);
-        calcul_flop("scasum ", VECSIZE, end - start);
+        moyenne += end - start;
     }
+
+    printf("mnblas_scasum moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("scasum ", VECSIZE * NB_FOIS, moyenne);
 
     printf("\n\n\nCOMPLEXE DOUBLE\n\n");
 
-    float rescd;
+    moyenne = 0;
 
     init_flop();
 
@@ -196,12 +201,14 @@ int main(int argc, char **argv)
         vector_initcd(cd1, asumcd[0], VECSIZE);
 
         start = _rdtsc();
-        rescd = mnblas_dzasum(VECSIZE, cd1, 1);
+        mnblas_dzasum(VECSIZE, cd1, 1);
         end = _rdtsc();
 
-        printf("mncblas_dzasum %d : res = %3.2f nombre de cycles: %Ld \n", i, rescd, end - start);
-        calcul_flop("dzasum ", VECSIZE, end - start);
+        moyenne += end - start;
     }
+
+    printf("mnblas_dzasum moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("dzasum ", VECSIZE * NB_FOIS, moyenne);
 
     printf("\n");
 

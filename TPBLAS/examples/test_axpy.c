@@ -6,7 +6,7 @@
 
 #include "flop.h"
 
-#define NB_FOIS 10
+#define NB_FOIS 4194
 
 float *vec1;
 float *vec2;
@@ -238,6 +238,7 @@ int main(int argc, char **argv)
 
     unsigned long long start, end;
     int i;
+    long long int moyenne = 0;
 
     init();
 
@@ -256,14 +257,18 @@ int main(int argc, char **argv)
         vector_init(vec2, 2.0, VECSIZE);
 
         start = _rdtsc();
-        mnblas_saxpy(6, 2.0, vec1, 1, vec2, 1);
+        mnblas_saxpy(VECSIZE, 2.0, vec1, 1, vec2, 1);
         end = _rdtsc();
 
-        printf("mncblas_saxpy %d : nombre de cycles: %Ld \n", i, end - start);
-        calcul_flop("saxpy ", 2 * VECSIZE, end - start);
+        moyenne += end - start;
     }
 
+    printf("mnblas_saxpy moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("saxpy ", 2 * VECSIZE * NB_FOIS, moyenne);
+
     printf("\n\n\nDOUBLE\n\n");
+
+    moyenne = 0;
 
     init_flop();
 
@@ -273,14 +278,18 @@ int main(int argc, char **argv)
         vector_initd(vec2d, 2.0, VECSIZE);
 
         start = _rdtsc();
-        mnblas_daxpy(6, 2.0, vec1d, 1, vec2d, 1);
+        mnblas_daxpy(VECSIZE, 2.0, vec1d, 1, vec2d, 1);
         end = _rdtsc();
 
-        printf("mncblas_daxpy %d : nombre de cycles: %Ld \n", i, end - start);
-        calcul_flop("daxpy ", 2 * VECSIZE, end - start);
+        moyenne += end - start;
     }
 
+    printf("mnblas_daxpy moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("daxpy ", 2 * VECSIZE * NB_FOIS, moyenne);
+
     printf("\n\n\nCOMPLEXE FLOAT\n\n");
+
+    moyenne = 0;
 
     init_flop();
 
@@ -290,14 +299,18 @@ int main(int argc, char **argv)
         vector_initcf(vec2cf, axpycf[0], VECSIZE);
 
         start = _rdtsc();
-        mnblas_caxpy(6, alphaf, vec1cf, 1, vec2cf, 1);
+        mnblas_caxpy(VECSIZE, alphaf, vec1cf, 1, vec2cf, 1);
         end = _rdtsc();
 
-        printf("mncblas_caxpy %d : nombre de cycles: %Ld \n", i, end - start);
-        calcul_flop("caxpy ", 2 * VECSIZE, end - start);
+        moyenne += end - start;
     }
 
+    printf("mnblas_caxpy moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("caxpy ", 2 * VECSIZE * NB_FOIS, moyenne);
+
     printf("\n\n\nCOMPLEXE DOUBLE\n\n");
+
+    moyenne = 0;
 
     init_flop();
 
@@ -307,12 +320,14 @@ int main(int argc, char **argv)
         vector_initcd(vec2cd, axpycd[0], VECSIZE);
 
         start = _rdtsc();
-        mnblas_zaxpy(6, alphad, vec1cd, 1, vec2cd, 1);
+        mnblas_zaxpy(VECSIZE, alphad, vec1cd, 1, vec2cd, 1);
         end = _rdtsc();
 
-        printf("mncblas_zaxpy %d : nombre de cycles: %Ld \n", i, end - start);
-        calcul_flop("zaxpy ", 2 * VECSIZE, end - start);
+        moyenne += end - start;
     }
+
+    printf("mnblas_zaxpy moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("zaxpy ", 2 * VECSIZE * NB_FOIS, moyenne);
 
     printf("\n");
 

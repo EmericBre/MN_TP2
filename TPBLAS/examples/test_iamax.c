@@ -6,7 +6,7 @@
 
 #include "flop.h"
 
-#define NB_FOIS 10
+#define NB_FOIS 4194
 
 int main(int argc, char **argv)
 {
@@ -124,6 +124,7 @@ int main(int argc, char **argv)
 
     unsigned long long start, end;
     int i;
+    long long int moyenne = 0;
 
     iamaxcf[0].real = 0.0;
     iamaxcf[0].imaginary = 0.0;
@@ -138,14 +139,18 @@ int main(int argc, char **argv)
     {
         vector_init(f1, 1.0, 6);
         start = _rdtsc();
-        f2 = mnblas_isamax(6, f1, 1);
+        f2 = mnblas_isamax(VECSIZE, f1, 1);
         end = _rdtsc();
 
-        printf("mnblas_isamax %d : res = %3.2f nombre de cycles: %Ld \n", i, f2, end - start);
-        calcul_flop("isamax ", VECSIZE, end - start);
+        moyenne += end - start;
     }
 
+    printf("mnblas_isamax moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("isamax ", VECSIZE * NB_FOIS, moyenne);
+
     printf("\n\n\nDOUBLE\n\n");
+
+    moyenne = 0;
 
     init_flop();
 
@@ -157,11 +162,15 @@ int main(int argc, char **argv)
         d2 = mnblas_idamax(VECSIZE, d1, 1);
         end = _rdtsc();
 
-        printf("mnblas_idamax %d : res = %3.2f nombre de cycles: %Ld \n", i, d2, end - start);
-        calcul_flop("idamax ", VECSIZE, end - start);
+        moyenne += end - start;
     }
 
+    printf("mnblas_idamax moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("idamax ", VECSIZE * NB_FOIS, moyenne);
+
     printf("\n\n\nCOMPLEXE FLOAT\n\n");
+
+    moyenne = 0;
 
     init_flop();
 
@@ -173,11 +182,15 @@ int main(int argc, char **argv)
         cf2 = mnblas_icamax(VECSIZE, cf1, 1);
         end = _rdtsc();
 
-        printf("mnblas_icamax %d : res = %3.2f nombre de cycles: %Ld \n", i, cf2, end - start);
-        calcul_flop("icamax ", VECSIZE, end - start);
+        moyenne += end - start;
     }
 
+    printf("mnblas_icamax moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("icamax ", VECSIZE * NB_FOIS, moyenne);
+
     printf("\n\n\nCOMPLEXE DOUBLE\n\n");
+
+    moyenne = 0;
 
     init_flop();
 
@@ -189,9 +202,11 @@ int main(int argc, char **argv)
         cd2 = mnblas_izamax(VECSIZE, cd1, 1);
         end = _rdtsc();
 
-        printf("mnblas_izamax %d : res = %3.2f nombre de cycles: %Ld \n", i, cd2, end - start);
-        calcul_flop("izamax ", VECSIZE, end - start);
+        moyenne += end - start;
     }
+
+    printf("mnblas_izamax moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("izamax ", VECSIZE * NB_FOIS, moyenne);
 
     printf("\n");
 

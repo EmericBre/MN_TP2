@@ -6,7 +6,7 @@
 
 #include "flop.h"
 
-#define NB_FOIS 10
+#define NB_FOIS 4194
 
 float *vec1;
 float *vec2;
@@ -250,7 +250,7 @@ int main(int argc, char **argv)
         vector_init(vec2, 2.0, VECSIZE);
 
         start = _rdtsc();
-        mncblas_sswap(6, vec1, 1, vec2, 1);
+        mncblas_sswap(VECSIZE, vec1, 1, vec2, 1);
         end = _rdtsc();
 
         moyenne += end - start;
@@ -271,7 +271,7 @@ int main(int argc, char **argv)
         vector_initd(vec2d, 2.0, VECSIZE);
 
         start = _rdtsc();
-        mncblas_dswap(6, vec1d, 1, vec2d, 1);
+        mncblas_dswap(VECSIZE, vec1d, 1, vec2d, 1);
         end = _rdtsc();
 
         moyenne += end - start;
@@ -292,7 +292,7 @@ int main(int argc, char **argv)
         vector_initcf(vec2cf, swapcf[0], VECSIZE);
 
         start = _rdtsc();
-        mncblas_cswap(6, vec1cf, 1, vec2cf, 1);
+        mncblas_cswap(VECSIZE, vec1cf, 1, vec2cf, 1);
         end = _rdtsc();
 
         moyenne += end - start;
@@ -313,7 +313,7 @@ int main(int argc, char **argv)
         vector_initcd(vec2cd, swapcd[0], VECSIZE);
 
         start = _rdtsc();
-        mncblas_zswap(6, vec1cd, 1, vec2cd, 1);
+        mncblas_zswap(VECSIZE, vec1cd, 1, vec2cd, 1);
         end = _rdtsc();
 
         moyenne += end - start;

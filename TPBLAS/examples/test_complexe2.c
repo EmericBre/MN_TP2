@@ -4,7 +4,7 @@
 #include "mnblas.h"
 #include "complexe2.h"
 
-#define NB_FOIS 4194304
+#define NB_FOIS 4194
 
 #include "flop.h"
 

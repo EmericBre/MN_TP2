@@ -6,7 +6,7 @@
 
 #include "flop.h"
 
-#define NB_FOIS 4194304
+#define NB_FOIS 4194
 
 int main(int argc, char **argv)
 {

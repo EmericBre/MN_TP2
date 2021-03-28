@@ -6,7 +6,7 @@
 
 #include "flop.h"
 
-#define NB_FOIS 10
+#define NB_FOIS 4194
 
 int main(int argc, char **argv)
 {
@@ -124,6 +124,7 @@ int main(int argc, char **argv)
 
     unsigned long long start, end;
     int i;
+    long long int moyenne = 0;
 
     iamincf[0].real = 0.0;
     iamincf[0].imaginary = 0.0;
@@ -142,11 +143,15 @@ int main(int argc, char **argv)
         f2 = mnblas_isamin(VECSIZE, f1, 1);
         end = _rdtsc();
 
-        printf("mnblas_isamin %d : res = %3.2f nombre de cycles: %Ld \n", i, f2, end - start);
-        calcul_flop("isamin ", VECSIZE, end - start);
+        moyenne += end - start;
     }
 
+    printf("mnblas_isamin moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("isamin ", VECSIZE * NB_FOIS, moyenne);
+
     printf("\n\n\nDOUBLE\n\n");
+
+    moyenne = 0;
 
     init_flop();
 
@@ -158,11 +163,15 @@ int main(int argc, char **argv)
         d2 = mnblas_idamin(VECSIZE, d1, 1);
         end = _rdtsc();
 
-        printf("mnblas_idamin %d : res = %3.2f nombre de cycles: %Ld \n", i, d2, end - start);
-        calcul_flop("idamin ", VECSIZE, end - start);
+        moyenne += end - start;
     }
 
+    printf("mnblas_idamin moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("idamin ", VECSIZE * NB_FOIS, moyenne);
+
     printf("\n\n\nCOMPLEXE FLOAT\n\n");
+
+    moyenne = 0;
 
     init_flop();
 
@@ -174,11 +183,15 @@ int main(int argc, char **argv)
         cf2 = mnblas_icamin(VECSIZE, cf1, 1);
         end = _rdtsc();
 
-        printf("mnblas_icamin %d : res = %3.2f nombre de cycles: %Ld \n", i, cf2, end - start);
-        calcul_flop("icamin ", VECSIZE, end - start);
+        moyenne += end - start;
     }
 
+    printf("mnblas_icamin moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("icamin ", VECSIZE * NB_FOIS, moyenne);
+
     printf("\n\n\nCOMPLEXE DOUBLE\n\n");
+
+    moyenne = 0;
 
     init_flop();
 
@@ -190,9 +203,11 @@ int main(int argc, char **argv)
         cd2 = mnblas_izamin(VECSIZE, cd1, 1);
         end = _rdtsc();
 
-        printf("mnblas_izamin %d : res = %3.2f nombre de cycles: %Ld \n", i, cd2, end - start);
-        calcul_flop("izamin ", VECSIZE, end - start);
+        moyenne += end - start;
     }
+
+    printf("mnblas_izamin moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("izamin ", VECSIZE * NB_FOIS, moyenne);
 
     printf("\n");
 

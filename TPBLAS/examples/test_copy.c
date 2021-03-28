@@ -6,7 +6,7 @@
 
 #include "flop.h"
 
-#define NB_FOIS 10
+#define NB_FOIS 4194
 
 float *vec1;
 float *vec2;
@@ -232,6 +232,7 @@ int main(int argc, char **argv)
 
     unsigned long long start, end;
     int i;
+    long long int moyenne = 0;
 
     init();
 
@@ -250,14 +251,18 @@ int main(int argc, char **argv)
         vector_init(vec2, 2.0, VECSIZE);
 
         start = _rdtsc();
-        mncblas_scopy(6, vec1, 1, vec2, 1);
+        mncblas_scopy(VECSIZE, vec1, 1, vec2, 1);
         end = _rdtsc();
 
-        printf("mncblas_scopy %d : nombre de cycles: %Ld \n", i, end - start);
-        calcul_flop("scopy ", 2 * VECSIZE, end - start);
+        moyenne += end - start;
     }
 
+    printf("mncblas_scopy moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("scopy ", 2 * VECSIZE * NB_FOIS, moyenne);
+
     printf("\n\n\nDOUBLE\n\n");
+
+    moyenne = 0;
 
     init_flop();
 
@@ -267,14 +272,18 @@ int main(int argc, char **argv)
         vector_initd(vec2d, 2.0, VECSIZE);
 
         start = _rdtsc();
-        mncblas_dcopy(6, vec1d, 1, vec2d, 1);
+        mncblas_dcopy(VECSIZE, vec1d, 1, vec2d, 1);
         end = _rdtsc();
 
-        printf("mncblas_dcopy %d : nombre de cycles: %Ld \n", i, end - start);
-        calcul_flop("dswap ", 2 * VECSIZE, end - start);
+        moyenne += end - start;
     }
 
+    printf("mncblas_dcopy moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("dcopy ", 2 * VECSIZE * NB_FOIS, moyenne);
+
     printf("\n\n\nCOMPLEXE FLOAT\n\n");
+
+    moyenne = 0;
 
     init_flop();
 
@@ -284,14 +293,18 @@ int main(int argc, char **argv)
         vector_initcf(vec2cf, copycf[0], VECSIZE);
 
         start = _rdtsc();
-        mncblas_ccopy(6, vec1cf, 1, vec2cf, 1);
+        mncblas_ccopy(VECSIZE, vec1cf, 1, vec2cf, 1);
         end = _rdtsc();
 
-        printf("mncblas_ccopy %d : nombre de cycles: %Ld \n", i, end - start);
-        calcul_flop("ccopy ", 2 * VECSIZE, end - start);
+        moyenne += end - start;
     }
 
+    printf("mncblas_ccopy moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("ccopy ", 2 * VECSIZE * NB_FOIS, moyenne);
+
     printf("\n\n\nCOMPLEXE DOUBLE\n\n");
+
+    moyenne = 0;
 
     init_flop();
 
@@ -301,12 +314,14 @@ int main(int argc, char **argv)
         vector_initcd(vec2cd, copycd[0], VECSIZE);
 
         start = _rdtsc();
-        mncblas_zcopy(6, vec1cd, 1, vec2cd, 1);
+        mncblas_zcopy(VECSIZE, vec1cd, 1, vec2cd, 1);
         end = _rdtsc();
 
-        printf("mncblas_zcopy %d : nombre de cycles: %Ld \n", i, end - start);
-        calcul_flop("zcopy ", 2 * VECSIZE, end - start);
+        moyenne += end - start;
     }
+
+    printf("mncblas_zcopy moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("zcopy ", 2 * VECSIZE * NB_FOIS, moyenne);
 
     printf("\n");
 

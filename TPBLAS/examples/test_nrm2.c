@@ -6,7 +6,7 @@
 
 #include "flop.h"
 
-#define NB_FOIS 10
+#define NB_FOIS 4194
 
 int main(int argc, char **argv)
 {
@@ -124,6 +124,7 @@ int main(int argc, char **argv)
 
     unsigned long long start, end;
     int i;
+    long long int moyenne = 0;
 
     nrm2cf[0].real = 0.0;
     nrm2cf[0].imaginary = 0.0;
@@ -142,11 +143,15 @@ int main(int argc, char **argv)
         f2 = mnblas_snrm2(VECSIZE, f1, 1);
         end = _rdtsc();
 
-        printf("mnblas_snrm2 %d : res = %3.2f nombre de cycles: %Ld \n", i, f2, end - start);
-        calcul_flop("snrm2 ", VECSIZE, end - start);
+        moyenne += end - start;
     }
 
+    printf("mnblas_snrm2 moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("snrm2 ", VECSIZE * NB_FOIS, moyenne);
+
     printf("\n\n\nDOUBLE\n\n");
+
+    moyenne = 0;
 
     init_flop();
 
@@ -158,11 +163,15 @@ int main(int argc, char **argv)
         d2 = mnblas_dnrm2(VECSIZE, d1, 1);
         end = _rdtsc();
 
-        printf("mnblas_dnrm2 %d : res = %3.2f nombre de cycles: %Ld \n", i, d2, end - start);
-        calcul_flop("dnrm2 ", VECSIZE, end - start);
+        moyenne += end - start;
     }
 
+    printf("mnblas_dnrm2 moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("dnrm2 ", VECSIZE * NB_FOIS, moyenne);
+
     printf("\n\n\nCOMPLEXE FLOAT\n\n");
+
+    moyenne = 0;
 
     init_flop();
 
@@ -174,11 +183,15 @@ int main(int argc, char **argv)
         cf2 = mnblas_scnrm2(VECSIZE, cf1, 1);
         end = _rdtsc();
 
-        printf("mnblas_scnrm2 %d : res = %3.2f nombre de cycles: %Ld \n", i, cf2, end - start);
-        calcul_flop("scnrm2 ", VECSIZE, end - start);
+        moyenne += end - start;
     }
 
+    printf("mnblas_scnrm2 moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("scnrm2 ", VECSIZE * NB_FOIS, moyenne);
+
     printf("\n\n\nCOMPLEXE DOUBLE\n\n");
+
+    moyenne = 0;
 
     init_flop();
 
@@ -190,9 +203,11 @@ int main(int argc, char **argv)
         cd2 = mnblas_dznrm2(VECSIZE, cd1, 1);
         end = _rdtsc();
 
-        printf("mnblas_dznrm2 %d : res = %3.2f nombre de cycles: %Ld \n", i, cd2, end - start);
-        calcul_flop("dznrm2 ", VECSIZE, end - start);
+        moyenne += end - start;
     }
+
+    printf("mnblas_dznrm2 moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("dznrm2 ", VECSIZE * NB_FOIS, moyenne);
 
     printf("\n");
 

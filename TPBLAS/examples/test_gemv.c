@@ -6,7 +6,7 @@
 
 #include "flop.h"
 
-#define NB_FOIS 10
+#define NB_FOIS 4194
 
 float *vec1;
 float *vec2;
@@ -329,6 +329,7 @@ int main(int argc, char **argv)
 
     unsigned long long start, end;
     int i;
+    long long int moyenne = 0;
 
     init();
 
@@ -351,11 +352,15 @@ int main(int argc, char **argv)
         mncblas_sgemv(101, 111, 30, 30, alphaf, vec1, 0, vec2, 1, betaf, vec3, 1);
         end = _rdtsc();
 
-        printf("mncblas_sgemv %d : nombre de cycles: %Ld \n", i, end - start);
-        calcul_flop("sgemv ", 960, end - start);
+        moyenne += end - start;
     }
 
+    printf("mncblas_sgemv moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("sgemv ", 960 * NB_FOIS, moyenne);
+
     printf("\n\n\nDOUBLE\n\n");
+
+    moyenne = 0;
 
     init_flop();
 
@@ -369,11 +374,15 @@ int main(int argc, char **argv)
         mncblas_dgemv(101, 111, 30, 30, alphad, vec1d, 0, vec2d, 1, betad, vec3d, 1);
         end = _rdtsc();
 
-        printf("mncblas_dgemv %d : nombre de cycles: %Ld \n", i, end - start);
-        calcul_flop("dgemv ", 960, end - start);
+        moyenne += end - start;
     }
 
+    printf("mncblas_dgemv moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("dgemv ", 960 * NB_FOIS, moyenne);
+
     printf("\n\n\nCOMPLEXE FLOAT\n\n");
+
+    moyenne = 0;
 
     init_flop();
 
@@ -387,11 +396,15 @@ int main(int argc, char **argv)
         mncblas_cgemv(101, 111, 30, 30, alphacf, vec1cf, 0, vec2cf, 1, betacf, vec3cf, 1);
         end = _rdtsc();
 
-        printf("mncblas_cgemv %d : nombre de cycles: %Ld \n", i, end - start);
-        calcul_flop("cgemv ", 960, end - start);
+        moyenne += end - start;
     }
 
+    printf("mncblas_cgemv moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("cgemv ", 960 * NB_FOIS, moyenne);
+
     printf("\n\n\nCOMPLEXE DOUBLE\n\n");
+
+    moyenne = 0;
 
     init_flop();
 
@@ -405,9 +418,11 @@ int main(int argc, char **argv)
         mncblas_zgemv(101, 111, 30, 30, alphacd, vec1cd, 0, vec2cd, 1, betacd, vec3cd, 1);
         end = _rdtsc();
 
-        printf("mncblas_zgemv %d : nombre de cycles: %Ld \n", i, end - start);
-        calcul_flop("zgemv ", 960, end - start);
+        moyenne += end - start;
     }
+
+    printf("mncblas_zgemv moyenne : nombre de cycles: %Ld \n", moyenne/NB_FOIS);
+    calcul_flop("zgemv ", 960 * NB_FOIS, moyenne);
 
     printf("\n");
 
